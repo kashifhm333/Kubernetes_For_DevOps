@@ -1,0 +1,20 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nginx-deploy
+  labels:
+    env: demo
+spec:
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+        env: demo
+    spec:
+      containers:
+        - name: web-cont
+          image: kashifhm333/my-static-site:latest
+  replicas: 1
+  selector:
+    matchLabels:
+      env: demo

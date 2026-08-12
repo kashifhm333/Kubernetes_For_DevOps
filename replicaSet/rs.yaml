@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx-rs
+  labels:
+    app: nginx
+    env: demo
+spec:
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+        app: nginx
+        env: demo
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+      env: demo

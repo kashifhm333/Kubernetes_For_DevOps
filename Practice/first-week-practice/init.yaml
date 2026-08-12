@@ -1,0 +1,20 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: my-init
+  labels:
+    name: my-init-pod
+spec:
+  containers:
+  - name: myapp-container
+    image: busybox:1.28
+    command: ['sh', '-c','echo ronaldo > ronaldo.txt && sleep 3600' ]
+    env:
+    - name: FIRSTNAME
+      value: "Kashif"
+  initContainers:
+   - name: init-myservice
+     image: busybox:1.28
+     command: ['sh', '-c']
+     args: ['echo i am init container > init.txt && sleep 3600']
+

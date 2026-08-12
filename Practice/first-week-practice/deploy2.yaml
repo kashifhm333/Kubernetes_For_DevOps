@@ -1,0 +1,22 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: app-deployment
+  labels:
+     demo: env
+  namespace: test-ns
+spec:
+  template:
+    metadata:
+       name: app-pod
+       labels:
+         demo: env
+
+    spec:
+      containers:
+      - name: nginx-pod
+        image: nginx:latest
+  replicas: 2
+  selector:
+    matchLabels:
+      demo: env  

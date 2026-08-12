@@ -1,0 +1,22 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata: 
+  name: nginx-deploy
+  labels:
+    app: nginx
+    env: demo
+  namespace: test-ns 
+spec:
+  template:
+    metadata:
+      name: web-app
+      labels:
+        env: demo
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+  replicas: 3
+  selector:
+    matchLabels:
+      env: demo
