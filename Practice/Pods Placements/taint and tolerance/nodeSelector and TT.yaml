@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: regular-pod
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: cka-cluster-worker2
+  containers:
+  - name: nginx
+    image: nginx:latest
+  tolerations:
+    - key: "node"
+      operator: "Equal"
+      value: "one"
+      effect: "NoSchedule"

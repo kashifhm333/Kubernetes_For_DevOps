@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-nodename
+spec:
+  nodeName: cka-cluster-worker
+  containers:
+    - name: nodename-cont
+      image: nginx:latest

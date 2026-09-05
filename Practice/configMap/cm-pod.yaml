@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod
+spec:
+  containers:
+    - name: cont
+      image: busybox
+      env:
+        - name: name
+          valueFrom:
+            configMapKeyRef:
+              name: app-conf
+              key: name
+      command:
+        - sh
+        - -c
+        - |
+          sleep 3600
+          echo "it is runnning"

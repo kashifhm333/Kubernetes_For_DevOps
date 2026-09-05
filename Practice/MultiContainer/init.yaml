@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: practical-init-demo
+spec:
+  # Shared storage between containers in this Pod
+  volumes:
+  - name: shared-folder
+    emptyDir: {}
+
+  # 1. THIS RUNS FIRST
+  initContainers:
+  - name: setup-step
+    image: busybox
+    command: 
+    - sh
+    - -c
+    - |
+      echo "=== [INIT] Setup started ==="
+      echo "=== [INIT] Waiting 5 seconds..."
+      sleep 5
+      echo "Database connection ready!" > /work-dir/status.txt
+      echo "=== [INIT] Setup complete. Exiting now. ==="
+    volumeMounts:
+    - name: shared-folder
+      mountPath: /work-dir
+
+  # 2. THIS RUNS ONLY AFTER INIT CONTAINER EXITS
+  containers:
+  - name: main-application
+    image: busybox
+    command:
+    - sh
+    - -c
+    - |
+      echo "=== [MAIN APP] Main app starting up... ==="
+      echo "Reading status from init container:"
+      cat /work-dir/status.txt
+      echo "=== [MAIN APP] Running continuously... ==="
+      sleep 3600
+    volumeMounts:
+    - name: shared-folder
+      mountPath: /work-dir

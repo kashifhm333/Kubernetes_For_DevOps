@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-app
+spec:
+  containers:
+  - name: server
+    image: nginx:alpine
+    resources:
+      requests:
+        memory: "128Mi"  # Scheduler looks for a node with 128Mi available
+        cpu: "250m"      # Guarantees 0.25 CPU cores
+      limits:
+        memory: "256i"  # Pod gets OOM Killed if it exceeds 512Mi
+        cpu: "500"         

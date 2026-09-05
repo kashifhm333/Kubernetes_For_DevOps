@@ -1,0 +1,20 @@
+kind: DaemonSet
+apiVersion: apps/v1
+metadata:
+  name: daemonset
+  namespace: test
+spec:
+  template:
+    metadata:
+      name: d-pod
+      labels:
+        env: demo
+    spec:
+      containers:
+        - name: dp-container
+          image: nginx:latest
+  selector:
+    matchLabels:
+      env: demo
+
+

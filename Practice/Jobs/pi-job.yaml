@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi-calculator
+spec:
+  # Retry up to 3 times if the pod fails
+  backoffLimit: 3
+  # Clean up the completed job automatically after 120 seconds
+  ttlSecondsAfterFinished: 120
+  template:
+    spec:
+      containers:
+      - name: pi
+        image: perl:5.34.0
+        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+      # Do not restart container inside pod on exit; rely on Job controller retry
+      restartPolicy: Never
